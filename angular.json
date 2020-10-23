@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "utilizandoIntrceptor"
+    }
+  },
+  "defaultProject": "utilizandoIntrceptor",
+  "cli": {
+    "analytics": false
+  }
 }

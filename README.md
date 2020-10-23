@@ -1,27 +1,67 @@
-# UtilizandoIntrceptor
+Utilizando Interceptor
+=====
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
+This is example easy use http interceptor
 
-## Development server
+How to use
+----------
+First create a module called an interceptor and paste the following code in module:
+```python
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+  providers: [
+    {
+     provide: HTTP_INTERCEPTORS,
+     useClass: InterceptorService,
+     multi: true,
+    }
+```
 
-## Code scaffolding
+Second, create a service with an interceptor name: ``` ng g s interceptor/interceptor ```
+Now, implements service of HttpInterceptor: ``` export class InterceptorService implements HttpInterceptor ```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Past the code:
+ ```
+   intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
+    let requestReturn: HttpRequest<any>;
 
-## Build
+    if (!req.url.startsWith('http')) {
+      requestReturn = req.clone({ url: environment.urlBackend + req.url });
+    } else {
+      requestReturn = req.clone({ url: req.url });
+    }
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+    return next.handle(requestReturn);
+  }
+ ```
+ 
+ Now, in app.module.ts, import ``` InterceptorModule ```
+ 
+ Screenshots
+----------
 
-## Running unit tests
+![source](imgs/env.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![source](imgs/http.png)
 
-## Running end-to-end tests
+![source](imgs/inter.png)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+------------
 
-## Further help
+Can you help me?
+--------------
+Download my games and rate them! it helps me a lot.
+* https://play.google.com/store/apps/details?id=br.com.zubcov.zombiemission&hl=pt
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+From stars in my projects github.
+* https://github.com/search?q=user%3AAlissonRichardy
+
+
+--------------
+
+References
+-------------
+Based of:
+* https://angular.io/api/common/http/HttpInterceptor
